@@ -38,18 +38,16 @@ export class Poset {
         const relation: [number, number][] = [];
         for (let line of snippet.split('\n')) {
             if (line.trim().length == 0) continue;
-            let words = line.trim().split(/ +/);
-            if (words.length % 2 != 1) throw new Error(`wrong number of words: ${line}`);
-            for (let i = 0; i < words.length; i += 2) {
-                if (! words[i].match(/^\w+$/)) throw new Error(`name must be alnum: ${line}: ${words[i]}`);
-                if (points.indexOf(words[i]) == -1) {
-                    points.push(words[i]);
+            let words = line.trim().split(/ *-> */);
+            for (let word of words) {
+                if (! word.match(/^\w+$/)) throw new Error(`name must be alnum: ${line}: ${word}`);
+                if (points.indexOf(word) == -1) {
+                    points.push(word);
                 }
             }
-            for (let i = 0; i + 2 < words.length; i += 2) {
-                if (words[i + 1] != '->') throw new Error(`arrow must be "->": ${line}`);
+            for (let i = 0; i < words.length - 1; ++ i) {
                 const a = points.indexOf(words[i]);
-                const b = points.indexOf(words[i + 2]);
+                const b = points.indexOf(words[i + 1]);
                 relation.push([ a, b ]);
             }
         }
