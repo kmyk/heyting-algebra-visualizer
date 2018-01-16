@@ -24,24 +24,28 @@ const run = () => {
     console.log(poset);
     console.log(Viz(poset.toDotLanguage()));
     canvas.innerHTML = Viz(poset.toDotLanguage());
-    const greatestElement = poset.points[poset.getGreatestElement()];
-    const leastElement = poset.points[poset.getLeastElement()];
-    const supremums = poset.getSupremum().indexOf(null) == -1;
-    const infimums = poset.getInfimum().indexOf(null) == -1;
-    const pseudoComplements = poset.getPseudoComplement() && poset.getPseudoComplement().indexOf(null) == -1;
-    pushDescription(`the greatest element: ${greatestElement}`);
-    pushDescription(`the least element: ${leastElement}`);
-    pushDescription(`all supremums exist: ${supremums}`);
-    pushDescription(`all infimums exist: ${infimums}`);
-    if (infimums) {
-        pushDescription(`all pseudo-complements exist: ${pseudoComplements}`);
-    }
-    pushDescription(`is lattice: ${poset.isLattice()}`);
-    if (poset.isLattice()) {
-        pushDescription(`is Heyting algebra: ${poset.isHeytingAlgebra()}`);
-    }
-    if (poset.isHeytingAlgebra()) {
-        pushDescription(`is Boolean algebra: ${poset.isBooleanAlgebra()}`);
+    if (poset.points.length == 0) {
+        pushDescription(`no elements`);
+    } else {
+        const greatestElement = poset.points[poset.getGreatestElement()];
+        const leastElement = poset.points[poset.getLeastElement()];
+        const supremums = poset.getSupremum().indexOf(null) == -1;
+        const infimums = poset.getInfimum().indexOf(null) == -1;
+        const pseudoComplements = poset.getPseudoComplement() && poset.getPseudoComplement().indexOf(null) == -1;
+        pushDescription(`the greatest element: ${greatestElement}`);
+        pushDescription(`the least element: ${leastElement}`);
+        pushDescription(`all supremums exist: ${supremums}`);
+        pushDescription(`all infimums exist: ${infimums}`);
+        if (infimums) {
+            pushDescription(`all pseudo-complements exist: ${pseudoComplements}`);
+        }
+        pushDescription(`is lattice: ${poset.isLattice()}`);
+        if (poset.isLattice()) {
+            pushDescription(`is Heyting algebra: ${poset.isHeytingAlgebra()}`);
+        }
+        if (poset.isHeytingAlgebra()) {
+            pushDescription(`is Boolean algebra: ${poset.isBooleanAlgebra()}`);
+        }
     }
 };
 
