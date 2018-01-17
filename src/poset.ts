@@ -40,7 +40,6 @@ export class Poset {
             if (line.trim().length == 0) continue;
             let words = line.trim().split(/ *-> */);
             for (let word of words) {
-                if (! word.match(/^\w+$/)) throw new Error(`name must be alnum: ${line}: ${word}`);
                 if (points.indexOf(word) == -1) {
                     points.push(word);
                 }
@@ -90,12 +89,12 @@ export class Poset {
         code += "digraph G {\n";
         code += "    graph [ rankdir = BT, bgcolor = \"#00000000\" ]\n";
         code += "    node [ shape = circle, style = filled, fillcolor = \"#ffffffff\" ]\n";
-        for (let a of this.points) {
-            code += `    ${a}`;
+        for (let i = 0; i < this.points.length; ++ i) {
+            code += `    ${i} [ label = ${JSON.stringify(this.points[i])} ]`;
         }
         const generators = this.getGenerators();
         for (let [ i, j ] of generators) {
-            code += `    ${this.points[i]} -> ${this.points[j]}\n`;
+            code += `    ${i} -> ${j}\n`;
         }
         code += "}\n";
         return code;
